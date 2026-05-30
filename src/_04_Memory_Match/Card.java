@@ -85,10 +85,10 @@ public class Card extends JButton {
             Image image = ImageIO.read(getClass().getResource(filename));
             icon = new ImageIcon(image.getScaledInstance(72, 96, Image.SCALE_SMOOTH));
         } catch (IOException ex) {
-            System.out.println("ERROR: Unable to get image from: " + filename);
+            System.out.println("ERROR 1: Unable to get image from: " + filename);
             System.out.println(ex);
         } catch (Exception ex) {
-            System.out.println("ERROR: Unable to get image from: " + filename);
+            System.out.println("ERROR 2: Unable to get image from: " + filename);
         }
         
         return icon;
