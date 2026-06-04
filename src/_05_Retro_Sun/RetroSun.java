@@ -2,6 +2,8 @@ package _05_Retro_Sun;
 
 
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 
@@ -14,6 +16,8 @@ import processing.core.PApplet;
 public class RetroSun extends PApplet {
     static final int WIDTH = 800;
     static final int HEIGHT = 600;
+    float y;
+    float h;
 
     // RGB colors
     int[] sunColors = {
@@ -34,6 +38,9 @@ public class RetroSun extends PApplet {
     public void setup() {
         // 2. Set bgColor as the background color
         background(bgColor); 
+        y = width / 2 - 25;
+        h=60;
+        
     }
 
     @Override
@@ -41,14 +48,14 @@ public class RetroSun extends PApplet {
         /*
          * PART 1: Drawing the sun
          */
-
+fill(sunColors[0]);
         // Draw an ellipse for the sun in the center of the window
         // Use fill(sunColors[0]) to make it yellow
         // Use noStroke() to remove the black outline
     	ellipse(400, 300, 400, 400); 
-    	fill(sunColors[0]); 
+    	 	
     	noStroke(); 
-    	
+
     	
         // Do you see a yellow sun like in the 1st image?
         // If not, fix your code before proceeding.
@@ -69,10 +76,14 @@ public class RetroSun extends PApplet {
         // to check if the pixel is the color of the yellow circle.
     	
     	for(int i = 0; i<pixels.length; i++) {
-//    		if(pixels[i]) {
-//    			
-//    		}
+    		if(pixels[i]==sunColors[0]) {
+    			int y = i/width;
+    			float step = map(y, 100, 500, 0, 1);
+    			pixels[i] = interpolateColor(sunColors, step); 
+    		}
     	}
+    	
+    	updatePixels(); 
         // If pixel[i] is the same color as the color of our circle (sunColors[0]),
         // we need to map the pixel to a color in our sunColors[] array
         // (see 2nd gradient image in RetroSun.html)
@@ -105,16 +116,21 @@ public class RetroSun extends PApplet {
          */
 
         // Set the fill color to the background color
+    	fill(bgColor); 
+
 
         // To draw each rectangle we need to find its x, y, width, height
         // *The y position can be any value within the sun:
-        //  float y = width / 2;
+    	
         // *The height can be any value you choose:
-        //  float h = 40;
+    	
         // *The x position can be the center of the sun's x position minus the radius:
-        //  float x = sunCenterX - sunRadius
+    	float x = 400 - 200;
         // *The width can be 2 times the radius
-        //  float w = 2 * sunRadius
+    	float w = 2 * 200; 
+    	
+    	rect(x, y, w, h); 
+ 
         
         // Do you see a section missing from the sun like in the 3rd image?
 
@@ -129,22 +145,28 @@ public class RetroSun extends PApplet {
         // Decrease the y variable of the rectangular section created in PART 3.
         // If there isn't a variable, declare a float variable OUTSIDE of the
         // draw function AND initialize it in the setup() function.
+    	y-=0.6; 
 
         // Do you see the rectangle moving upwards?
 
         // Pick a y positon to be the location when the sections stop moving up.
         // If the rectangle's y positon is above this, move the rectangle's
         // y position back to the bottom of the sun.
+    	if(y<195) {
+    		y=500; 
+    	}
 
         // Does the rectangle move back to the bottom?
 
         // Decrease the the height of the rectangle as it moves upwards.
         // Similar to the y positon, a float variable for the height needs to be
         // created if it doesn't already exist.
+   
 
         // Adjust the amount to decrease so that it disappears close to the top.
         // HINT: You can use the map() function again,
         // h = map(y, missingSectionTopY, missingSectionBottomY, 1, 40);
+    	h = map(y, 200, 500, 1, 60);
 
         // The map() function will make the value of h = 1 if y is at the top,
         // and h = 40 if y is at the bottom.
@@ -160,7 +182,15 @@ public class RetroSun extends PApplet {
         // code you wrote for the 1 missing sun section.
         // HINT: You can use the Rectangle class defined below to create
         // a list of Rectangles.
-
+    	ArrayList<Rectangle> sections = new ArrayList<Rectangle>(); 
+    	
+    	for(int i =0; i<6; i++) {
+    		h = map(y, 200, 500, 1, 60);
+        	Rectangle r = new Rectangle(x, y+20*i, w, h); 
+        	sections.add(r); 
+        	rect(r.x, r.y, r.w, r.h); 
+    	}
+    
         
         /*
          * PART 6: Adding extras
