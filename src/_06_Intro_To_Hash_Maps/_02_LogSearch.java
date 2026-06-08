@@ -1,12 +1,15 @@
 package _06_Intro_To_Hash_Maps;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class _02_LogSearch {
+public class _02_LogSearch implements ActionListener {
     /*
      * Crate a HashMap of Integers for the keys and Strings for the values.
      * Create a GUI with three buttons.
@@ -38,31 +41,73 @@ public class _02_LogSearch {
      *      If this ID exists in the HashMap, remove it. Otherwise, notify the
      *      user that the ID is not in the list.
      */
-	public static void main(String[] args) {
-		
-	}
+	
 	
 	JFrame frame = new JFrame(); 
 	JPanel panel = new JPanel(); 
-	JButton buttonOne = new JButton("Add Entry"); 
-	JButton buttonTwo = new JButton("Search by ID"); 
-	JButton buttonThree = new JButton("View List"); 
-	JButton buttonFour = new JButton("Remove Entry"); 
+	JButton addEntry = new JButton("Add Entry"); 
+	JButton searchById = new JButton("Search by ID"); 
+	JButton viewList = new JButton("View List"); 
+	JButton removeEntry = new JButton("Remove Entry"); 
 
 	HashMap<Integer, String> hashmap = new HashMap<Integer, String>();
 	
 	void run() {
 		frame.setVisible(true);
 		frame.add(panel); 
-		panel.add(buttonOne); 
-		panel.add(buttonTwo); 
-		panel.add(buttonThree); 
-		panel.add(buttonFour); 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		panel.add(addEntry); 
+		panel.add(searchById); 
+		panel.add(viewList); 
+		panel.add(removeEntry); 
+		
+		addEntry.addActionListener(this); 
+		searchById.addActionListener(this);
+		viewList.addActionListener(this);
+		removeEntry.addActionListener(this);
 		
 		frame.pack(); 
 		
 		
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == addEntry ) {
+			String i = JOptionPane.showInputDialog(null, "Enter an ID number");
+			int idNum = Integer.parseInt(i); 
+			String name = JOptionPane.showInputDialog(null, "Enter your name"); 
+			hashmap.put(idNum, name); 
+		}
+		if(e.getSource() == searchById) {
+			String i = JOptionPane.showInputDialog(null, "Enter an ID number"); 
+			int x = Integer.parseInt(i); 
+			if(hashmap.containsKey(x)) {
+				JOptionPane.showMessageDialog(null, hashmap.get(x));
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "This ID does not exist");
+			}
+		}
+		if(e.getSource() == viewList) {
+			String s = ""; 
+	        for(Integer i : hashmap.keySet()){
+	        	s = s + " \n" + "ID: " + i + "  Name: " + hashmap.get(i); 
+	        }
+	        JOptionPane.showMessageDialog(null, s);
+		}
+		if(e.getSource() == removeEntry) {
+			String s =JOptionPane.showInputDialog(null, "Enter an ID number"); 
+			int x = Integer.parseInt(s); 
+			if(hashmap.containsKey(x)) {
+				hashmap.remove(x); 
+			}else {
+				JOptionPane.showMessageDialog(null, "This ID does not exist"); 
+			}
+		}
+		
 	}
 	
 
