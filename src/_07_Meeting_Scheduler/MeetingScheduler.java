@@ -22,6 +22,21 @@ public class MeetingScheduler {
      * Assume both schedules are in the same time zones
      */
     public static Schedule getMutualAvailability(Schedule person1, Schedule person2) {
+    	
+    	Schedule schedule; 
+    	
+        for(String i : person1.getSchedule().keySet()) {
+        	for(String j : person2.getSchedule().keySet()) {
+        		if( i == j && person1.getSchedule().get(i) == person2.getSchedule().get(j)) {
+        			//schedule.addAvailability(i, person1.getSchedule().get(i));
+        		}
+        	}
+        	
+        }
+        
+        
+        
+        
         
         return null;
     }
