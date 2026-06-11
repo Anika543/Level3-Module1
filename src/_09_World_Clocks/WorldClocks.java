@@ -3,9 +3,11 @@ package _09_World_Clocks;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -38,6 +40,7 @@ public class WorldClocks implements ActionListener {
     ClockUtilities clockUtil;
     Timer timer;
     TimeZone timeZone;
+    JButton button; 
 
     JFrame frame;
     JPanel panel;
@@ -46,6 +49,8 @@ public class WorldClocks implements ActionListener {
     String city;
     String dateStr;
     String timeStr;
+    
+    HashMap<String, TimeZone> cityNameToTimeZone = new HashMap<String, TimeZone>(); 
     
     public WorldClocks() {
         clockUtil = new ClockUtilities();
@@ -76,7 +81,11 @@ public class WorldClocks implements ActionListener {
         // 1000 milliseconds
         timer = new Timer(1000, this);
         timer.start();
+        
+        
     }
+    
+
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
